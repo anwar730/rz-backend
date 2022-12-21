@@ -1,6 +1,7 @@
 class JobseekersController < ApplicationController
     def index
-        render json: Jobseeker.all
+        jobseekers=Jobseeker.all
+        render json: jobseekers
     end
 
     def show
