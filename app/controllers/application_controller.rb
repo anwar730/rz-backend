@@ -1,20 +1,17 @@
 class ApplicationController < ActionController::Base
     include ActionController::Cookies
-    # protect_from_forgery with: :null_session
 
-    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+    rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
   
-    before_action :authorize
+    # before_action :authorize
   
     private
   
-    def authorize
-      @current_user = User.find_by(id: session[:user_id])
+    # def authorize
+    #   render json: {errors: ["Not authorized", "Kindly Log in"]}, status: :unauthorized unless session.include? :jobseeker_id
+    # end
   
-      render json: { errors: ["Not authorized"] }, status: :unauthorized unless @current_user
-    end
-  
-    def render_unprocessable_entity_response(exception)
-      render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
-    end
+    def record_invalid(invalid)
+      render json: {errors: invalid.record.errors.full_messages}, status: :unprocessable_entity
+  end
 end

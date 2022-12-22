@@ -62,6 +62,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_075106) do
   end
 
   create_table "matched_jobs", force: :cascade do |t|
+    t.string "jobseeker"
+    t.string "job_title"
+    t.string "company_name"
     t.integer "jobseeker_id"
     t.integer "job_id"
     t.integer "employer_id"

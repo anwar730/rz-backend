@@ -1,11 +1,21 @@
 class JobseekersController < ApplicationController
+    
     def index
-        jobseekers=Jobseeker.all
-        render json: jobseekers
+        render json: Jobseeker.all
+    end
+
+    def create 
+        jobseeker = Jobseeker.create(jobseeker_params)
+        if jobseeker.valid?
+            session[:jobseeker_id] = jobseeker.id
+            render json: jobseeker, status: :created
+        else
+            render json: {errors: jobseeker.errors.full_messages}, status: :unprocessable_entity
+        end
     end
 
     def show
-        jobseeker = jobseeker_params
+        jobseeker = Jobseeker.find_by(id: session[:jobseeker_id])
         if jobseeker
             render json: jobseeker
         else
@@ -15,6 +25,6 @@ class JobseekersController < ApplicationController
 
     private
     def jobseeker_params
-        Jobseeker.find_by(id: params[:id])
+        params.permit(:username, :password, :password_confirmation)
     end
 end

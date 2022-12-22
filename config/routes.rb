@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :jobs
   resources :employers
   resources :jobseekers
+  
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
   get "/me", to: "jobseekers#show"
