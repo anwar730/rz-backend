@@ -1,20 +1,36 @@
 class JobseekersController < ApplicationController
-    def index
-        jobseekers=Jobseeker.all
-        render json: jobseekers
+    skip_before_action :authorize, only: [:create]
+    
+    def create
+      user = User.create!(user_params)
+      session[:user_id] = user.id
+      render json: user, status: :created
     end
-
+  
     def show
-        jobseeker = jobseeker_params
-        if jobseeker
-            render json: jobseeker
-        else
-            render json: {error: "Jobseeker not found"}, status: :not_found
-        end
+      render json: @current_user
     end
 
+    def update
+      if @current_user
+      @current_user.update!(update_params)
+      render json: @current_user, status: :accepted
+      end
+    end
+
+    def destroy
+      user = User.find(params[:id])
+      user.destroy
+      render json: user, status: :no_content
+    end
+  
     private
-    def jobseeker_params
-        Jobseeker.find_by(id: params[:id])
+  
+    def user_params
+      params.permit(:username, :email, :password, :password_confirmation, :profile_pic, :followers)
+    end
+
+    def update_params
+      params.permit(:username, :email, :profile_pic)
     end
 end
