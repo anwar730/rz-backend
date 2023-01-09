@@ -3,4 +3,10 @@ class Employer < ApplicationRecord
     has_many :jobs
     has_many :job_applications, through: :jobs
     has_many :jobseekers, through: :matched_jobs
+
+    has_many :job_applications
+    has_many :matched_jobs
+    has_many :jobseekers, through: :job_applications
+    has_secure_password
+
 end

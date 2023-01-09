@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
     include ActionController::Cookies
-    # protect_from_forgery with: :null_session
+    protect_from_forgery with: :null_session
+    skip_before_action :verify_authenticity_token
 
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
   
@@ -9,8 +10,7 @@ class ApplicationController < ActionController::Base
     private
   
     def authorize
-      @current_user = User.find_by(id: session[:user_id])
-  
+      @current_user = Jobseeker.find_by(id: session[:user_id])
       render json: { errors: ["Not authorized"] }, status: :unauthorized unless @current_user
     end
   

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :admins
   resources :matched_jobs
   resources :job_applications
   resources :jobs

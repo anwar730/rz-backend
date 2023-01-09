@@ -1,10 +1,14 @@
 class JobseekersController < ApplicationController
-    skip_before_action :authorize, only: [:create]
+    skip_before_action :authorize, only: [:create,:index,:show,:destroy]
+    
+    def index
+        render json: Jobseeker.all
+    end
     
     def create
-      user = User.create!(user_params)
-      session[:user_id] = user.id
-      render json: user, status: :created
+      jobseeker = Jobseeker.create!(user_params)
+      session[:user_id] = jobseeker.id
+      render json: jobseeker, status: :created
     end
   
     def show
@@ -27,10 +31,10 @@ class JobseekersController < ApplicationController
     private
   
     def user_params
-      params.permit(:username, :email, :password, :password_confirmation, :profile_pic, :followers)
+      params.permit(:username, :email, :password, :role, :admin_id, :jobs_done, :skills, :rating, :isloggedin)
     end
 
     def update_params
-      params.permit(:username, :email, :profile_pic)
+      params.permit(:username, :email)
     end
 end
