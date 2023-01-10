@@ -27,7 +27,7 @@ Employer.create(company_name: "safaricom", username:"charles",password:"123456",
 
 
 
-jobs
+
 Job.create(company_name:"tracom",category:"I.T",job_title:"senior developer",job_description:"ability to code and write software instructions",responsibilities:"work from 8-5",salary:200000,number_of_applicants:20,employer_id:2)
 Job.create(company_name:"siyama",category:"I.T",job_title:"M.D",job_description:"managing director",responsibilities:"supervise over the developers",salary:225000,number_of_applicants:10,employer_id:3)
 Job.create!(company_name:"safaricom",category:"I.T",job_title:"junior developer",job_description:"ability to code and write software instructions",responsibilities:"work from morning to evening without any hinderances",salary:125000,status:"hiring",number_of_applicants:40,employer_id:1)
