@@ -81,6 +81,7 @@ test:
 #
 production:
   <<: *default
-  database: rz_backend_production
-  username: rz_backend
-  password: <%= ENV["RZ_BACKEND_DATABASE_PASSWORD"] %>
+  # database: rz_backend_production
+  # username: rz_backend
+  # password: <%= ENV["RZ_BACKEND_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>

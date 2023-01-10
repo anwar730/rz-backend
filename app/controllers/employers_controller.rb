@@ -12,11 +12,12 @@ class EmployersController < ApplicationController
             render json: {error: "Employer not found"}, status: :not_found
         end
     end
+    
     def create
         employer = Employer.create!(emp_params)
         # session[:user_id] = jobseeker.id
         render json: employer, status: :created
-      end
+    end
 
     private
     def employer_params
