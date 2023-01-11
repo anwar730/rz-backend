@@ -1,5 +1,5 @@
 class JobApplicationsController < ApplicationController
-    skip_before_action :authorize, only: [:index,:create,:destroy]
+    skip_before_action :authorize, only: [:index,:create,:destroy,:update,:show]
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
 
     def index

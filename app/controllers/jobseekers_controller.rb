@@ -1,5 +1,5 @@
 class JobseekersController < ApplicationController
-    skip_before_action :authorize, only: [:create,:index,:show,:destroy]
+    skip_before_action :authorize, only: [:create,:index,:show,:destroy,:update]
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     
     def index
