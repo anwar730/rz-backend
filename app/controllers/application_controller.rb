@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
     before_action :authorize
   
     private
+    
   
     def authorize
       @current_user = Jobseeker.find_by(id: session[:user_id])
