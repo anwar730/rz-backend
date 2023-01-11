@@ -1,5 +1,6 @@
 class MatchedJobsController < ApplicationController
-    skip_before_action :authorize, only: [:index]
+    skip_before_action :authorize, only: [:index,:show,:create,:destroy]
+    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     
     def index
         render json: MatchedJob.all
@@ -8,6 +9,7 @@ class MatchedJobsController < ApplicationController
     def show
         render json: MatchedJob.find(params[:id])
     end
+    
     def create
         matchedJOb = MatchedJob.create!(mj_params)
         render json: matchedJOb, status: :created
@@ -22,4 +24,8 @@ class MatchedJobsController < ApplicationController
     def mj_params
         params.permit(:employer_id,:job_id,:jobseeker_id)
     end
+    def render_not_found_response
+        render json: {error: "Matched Job not found"}, status: :not_found
+    end
+
 end

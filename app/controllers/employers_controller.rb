@@ -1,5 +1,6 @@
 class EmployersController < ApplicationController
     skip_before_action :authorize, only: [:index, :update,:create, :destroy, :show]
+    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     def index
         render json: Employer.all
     end
@@ -30,6 +31,9 @@ class EmployersController < ApplicationController
     # def employer_params
     #     Employer.find_by(id: params[:id])
     # end
+    def render_not_found_response
+        render json: {error: "Employer not found"}, status: :not_found
+    end
 
     def emp_params
         params.permit(:username, :email, :password, :role, :admin_id, :company_name)

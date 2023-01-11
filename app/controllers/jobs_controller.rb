@@ -1,5 +1,6 @@
 class JobsController < ApplicationController
     skip_before_action :authorize, only: [:index,:show, :create]
+    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     
     def index
         render json: Job.all
@@ -7,11 +8,7 @@ class JobsController < ApplicationController
 
     def show
         job = job_params
-        if job
-            render json: job
-        else
-            render json: { error: "Job not found" }, status: 404
-        end
+        render json: job
     end
     
     def create
@@ -33,4 +30,8 @@ class JobsController < ApplicationController
     def j_params
         params.permit(:company_name,:job_description,:job_title,:category,:responsibilities,:number_of_applicants,:employer_id,:salary)
     end
+    def render_not_found_response
+        render json: {error: "Job not found"}, status: :not_found
+    end
+
 end

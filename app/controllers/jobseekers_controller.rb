@@ -1,5 +1,6 @@
 class JobseekersController < ApplicationController
     skip_before_action :authorize, only: [:create,:index,:show,:destroy]
+    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     
     def index
         render json: Jobseeker.all
@@ -37,4 +38,8 @@ class JobseekersController < ApplicationController
     def update_params
       params.permit(:username, :email)
     end
+    def render_not_found_response
+      render json: {error: "Jobseeker not found"}, status: :not_found
+    end
+
 end

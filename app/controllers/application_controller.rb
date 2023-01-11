@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
     skip_before_action :verify_authenticity_token
 
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
   
     before_action :authorize
   
@@ -17,4 +18,8 @@ class ApplicationController < ActionController::Base
     def render_unprocessable_entity_response(exception)
       render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
     end
+
+    def render_not_found_response
+      render json: {error: "Admin not found"}, status: :not_found
+   end
 end

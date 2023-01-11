@@ -1,5 +1,8 @@
 class AdminsController < ApplicationController
+    
     skip_before_action :authorize, only: [:index,:create,:destroy]
+    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+    
     def index 
         render json: Admin.all
     end
@@ -9,6 +12,18 @@ class AdminsController < ApplicationController
     render json:admin , status: :created
     end
 
+    def show 
+        admin=Admin.find_by(id:params[:id])
+        render json: admin
+    end
+
+    def update
+        admin=Admin.find_by(id: params[:id])
+        admin.update!(admin_params)
+        render json: admin, status: :accepted
+    end
+
+
     def destroy
         admin = Admin.find(params[:id])
         admin.destroy
@@ -17,8 +32,13 @@ class AdminsController < ApplicationController
 
 
     private
+    def render_not_found_response
+        render json: {error: "Admin not found"}, status: :not_found
+    end
     def admin_params
         params.permit(:name, :email, :password)
     end
+
+ 
 
 end
