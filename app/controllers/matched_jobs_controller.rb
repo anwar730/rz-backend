@@ -1,5 +1,5 @@
 class MatchedJobsController < ApplicationController
-    skip_before_action :authorize, only: [:index,:show,:create,:destroy]
+    skip_before_action :authorize, only: [:index,:show,:create,:destroy, :update]
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     
     def index
@@ -14,6 +14,14 @@ class MatchedJobsController < ApplicationController
         matchedJOb = MatchedJob.create!(mj_params)
         render json: matchedJOb, status: :created
     end
+
+    def update
+        mj=MatchedJob.find_by(id: params[:id])
+        mj.update!(mj_params)
+        render json: mj, status: :accepted
+    end
+    
+
     def destroy
         mj = MatchedJob.find(params[:id])
         mj.destroy

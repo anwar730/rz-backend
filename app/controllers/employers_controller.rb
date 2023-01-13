@@ -19,6 +19,7 @@ class EmployersController < ApplicationController
 
     def create
         employer = Employer.create!(emp_params)
+        session[:user_id] = employer.id
         render json: employer, status: :created
     end
     def destroy

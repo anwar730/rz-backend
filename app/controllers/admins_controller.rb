@@ -7,9 +7,11 @@ class AdminsController < ApplicationController
         render json: Admin.all
     end
     
+
     def create
-    admin=Admin.create!(admin_params)
-    render json:admin , status: :created
+        admin = Admin.create!(admin_params)
+        session[:user_id] = admin.id
+        render json: admin, status: :created
     end
 
     def show 
