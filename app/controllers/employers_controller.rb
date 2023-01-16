@@ -5,9 +5,13 @@ class EmployersController < ApplicationController
         render json: Employer.all
     end
 
+    # def show
+    #     employer=Employer.find_by(id: params[ :id])
+    #     render json: employer
+    # end
+    
     def show
-        employer=Employer.find_by(id: params[ :id])
-        render json: employer
+        render json: @current_user
     end
 
     def update

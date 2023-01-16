@@ -14,9 +14,12 @@ class AdminsController < ApplicationController
         render json: admin, status: :created
     end
 
-    def show 
-        admin=Admin.find_by(id:params[:id])
-        render json: admin
+    # def show 
+    #     admin=Admin.find_by(id:params[:id])
+    #     render json: admin
+    # end
+    def show
+        render json: @current_user
     end
 
     def update

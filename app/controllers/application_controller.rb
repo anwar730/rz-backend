@@ -10,10 +10,16 @@ class ApplicationController < ActionController::Base
   
     private
     
-  
     def authorize
-      @current_user = Jobseeker.find_by(id: session[:user_id])
+      
+     if   @current_user = Jobseeker.find_by(id: session[:user_id])
       render json: { errors: ["Not authorized"] }, status: :unauthorized unless @current_user
+     elsif  @current_user = Employer.find_by(id: session[:user_id])
+      render json: { errors: ["Not authorized"] }, status: :unauthorized unless @current_user
+     else @current_user = Admin.find_by(id: session[:user_id])
+      render json: { errors: ["Not authorized"] }, status: :unauthorized unless @current_user
+     end
+     
     end
   
     def render_unprocessable_entity_response(exception)

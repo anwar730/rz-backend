@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   resources :jobseekers
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
-  get "/me", to: "jobseekers#show"
+  get "/me/jobseeker", to: "jobseekers#show"
+  get "/me/employer", to: "employers#show"
+  get "/me/admin", to: "admin#show"
   post '/signup', to: "jobseekers#create"
   post '/employer/signup', to: "employers#create"
   post '/admin/signup', to: "admins#create"
